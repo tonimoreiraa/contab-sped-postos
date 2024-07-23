@@ -8,6 +8,7 @@ from sobral import get_data as get_data_sobral
 from acqua_bool import get_data as get_data_acqua_bool
 from mac import get_data as get_data_mac
 from verdes_campos import get_data as get_data_verdes_campos
+from smart import get_data as get_data_smart
 from sped_vs_rep import sped_vs_rep
 
 # comparating data of BRISA DO LAGO
@@ -48,4 +49,8 @@ sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_pa
 
 # comparating data of COMERCIAL VERDES CAMPOS
 bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path = get_data_verdes_campos()
+sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path)
+
+# comparating data of SMART
+bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path = get_data_smart()
 sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path)
