@@ -1,8 +1,17 @@
 import openpyxl
+from save_to_sheet import save_to_sheet
+
+cnpj = "10800554000127"
+empresa = "AUTO POSTO ACQUA BOOL LTDA"
 
 def get_data():
-    arquivo = 'ap mac.xlsx'
-    wb = openpyxl.load_workbook(arquivo, data_only=True)  
+    try:
+        file_path = f"input/relatorio/{cnpj}.pdf"
+        wb = openpyxl.load_workbook(file_path, data_only=True)
+    except:
+        file_path = f"input/relatorio/{cnpj}.xlsx"
+        wb = openpyxl.load_workbook(file_path, data_only=True)
+        
     sheet = wb.active
     sheet = wb["Plan1"]
 
@@ -24,18 +33,18 @@ def get_data():
     else:
         print("Não foi possível encontrar as linhas inicial ou final, ou o intervalo é inválido.")
 
-    bicos = []
+    bico_data = []
     for list in list_of_dicts:
         if list:
             try:
-                bicos.append({
+                bico_data.append({
                     'Bico':list[5],
                     'Produto':list[6],
                     'Abertura':list[8],
                     'Fechamento':list[9],
                     'Sem_intervencao':list[10],
-                    #'Com_intervencao':list[9],
-                    'Lacre':list[12],
+                    'Com_intervencao': None,
+                    #'Lacre':list[12],
                     'Afericao':list[13]
                 })
             except:
@@ -47,11 +56,11 @@ def get_data():
         row_dict = {cell.column: cell.value for cell in sheet[i] if cell.value is not None}
         list_of_dicts.append(row_dict)
 
-    tanques = []
+    tanque_data = []
     for list in list_of_dicts:
         if list:
             try:
-                tanques.append({
+                tanque_data.append({
                     'Tanque':list[1],
                     'Produto':list[2],
                     'Abertura':list[4],
@@ -61,4 +70,6 @@ def get_data():
             except:
                 pass
 
-    return bicos, tanques
+    save_to_sheet(bico_data, tanque_data, f"output/{cnpj}.xlsx")
+    path_dac = f"input/dac/{cnpj}.txt"
+    return bico_data, tanque_data, empresa, path_dac

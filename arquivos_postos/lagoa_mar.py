@@ -1,5 +1,9 @@
 import PyPDF2
 import re
+from save_to_sheet import save_to_sheet
+
+cnpj = "39482221000189"
+empresa = "POSTO LAGOA MAR COMBUSTIVEIS LTDA"
 
 def extract_text_from_pdf(pdf_path):
     with open(pdf_path, "rb") as file:
@@ -53,14 +57,18 @@ def extract_tanque_data(texto):
 
 
 def get_data():
-    # Caminho do PDF fornecido
-    pdf_path = 'ap lagoa mar.pdf'
+    try:
+        file_path = f"input/relatorio/{cnpj}.pdf"
+    except:
+        file_path = f"input/relatorio/{cnpj}.xlsx"
 
     # Extração do texto
-    texto = extract_text_from_pdf(pdf_path)
+    texto = extract_text_from_pdf(file_path)
 
     # Extração dos dados
     bico_data = extract_bico_data(texto)
     tanque_data = extract_tanque_data(texto)
-    return bico_data, tanque_data
+    save_to_sheet(bico_data, tanque_data, f"output/{cnpj}.xlsx")
+    path_dac = f"input/dac/{cnpj}.txt"
+    return bico_data, tanque_data, empresa, path_dac
 

@@ -1,5 +1,9 @@
 import PyPDF2
 import re
+from save_to_sheet import save_to_sheet
+
+cnpj = "03522014000163"
+empresa = "SOBRAL COMERCIO E SERVICOS LTDA"
 
 def extract_text_from_pdf(pdf_path):
     with open(pdf_path, "rb") as file:
@@ -22,7 +26,7 @@ def extract_bico_data(texto):
             bico, abertura, fechamento, afericao, nserie, sem_intervencao,  com_intervencao = match_dados.groups()
             dados_extracao.append({
                 "Bico": bico,
-                #"Produto": produto, (para adicionar)
+                "Produto": None, # to add
                 "Abertura": abertura,
                 "Fechamento": fechamento,
                 "Sem_intervencao": sem_intervencao,
@@ -57,13 +61,17 @@ def extract_tanque_data(texto):
     return movimentacao_tanques
 
 def get_data():
-    # Caminho do PDF fornecido
-    pdf_path = 'ap sobral.pdf'
+    try:
+        file_path = f"input/relatorio/{cnpj}.pdf"
+    except:
+        file_path = f"input/relatorio/{cnpj}.xlsx"
 
     # Extração do texto
-    texto = extract_text_from_pdf(pdf_path)
+    texto = extract_text_from_pdf(file_path)
 
     # Extração dos dados
     bico_data = extract_bico_data(texto)
     tanque_data = extract_tanque_data(texto)
-    return bico_data, tanque_data
+    save_to_sheet(bico_data, tanque_data, f"output/{cnpj}.xlsx")
+    path_dac = f"input/dac/{cnpj}.txt"
+    return bico_data, tanque_data, empresa, path_dac
