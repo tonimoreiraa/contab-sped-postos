@@ -1,4 +1,5 @@
 from sped import read_input
+from save_to_sheet import save_to_sheet
 
 def format_value(value):
         """Converte uma string formatada com vírgula em float"""
@@ -13,7 +14,7 @@ def format_value(value):
         except ValueError:
             return 0.0
         
-def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path):
+def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, xlsx_path):
     print(f"*** Processamento de dados da empresa {empresa} Iniciado... ***")
     data_from_sped = read_input(input_path)
     tanque_data_from_sped, bico_data_from_sped = data_from_sped
@@ -53,7 +54,10 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path):
                     print(f"----Valor no relatório: {fechamento_rep}| ----Valor no SPED: {fechamento_sped}")
                     
         if errors == 0:
+            bicos['Obs'] = "VERDADEIRO"
             print(f"Bico [{bicos['Bico']}] foi validado com sucesso! Nenhuma divergência encontrada.")
+        else:
+            bicos['Obs'] = "FALSO"
 
     first_last_tanques = {}
 
@@ -84,6 +88,10 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path):
                     print(f"Tanque [{tanques['Tanque']}] apresentou {errors} divergências no valor de |fechamento|:")
                     print(f"----Valor no relatório: {fechamento_rep}| ----Valor no SPED: {fechamento_sped}")
         if errors == 0:
+            tanques['Obs'] = "VERDADEIRO"
             print(f"Tanque [{tanques['Tanque']}] foi validado com sucesso! Nenhuma divergência encontrada.")
-    
+        else:
+            tanques['Obs'] = "FALSO"
+
+    save_to_sheet(bico_data_from_rep, tanque_data_from_rep, xlsx_path)
     print(f"*** Processamento de dados da empresa {empresa} finalizado! ***")

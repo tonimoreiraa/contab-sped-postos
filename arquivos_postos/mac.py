@@ -11,7 +11,7 @@ def get_data():
     except:
         file_path = f"input/relatorio/{cnpj}.xlsx"
         wb = openpyxl.load_workbook(file_path, data_only=True)
-        
+
     sheet = wb.active
     sheet = wb["Plan1"]
 
@@ -70,6 +70,6 @@ def get_data():
             except:
                 pass
 
-    save_to_sheet(bico_data, tanque_data, f"output/{cnpj}.xlsx")
     path_dac = f"input/dac/{cnpj}.txt"
-    return bico_data, tanque_data, empresa, path_dac
+    path_xlsx = f"output/{cnpj}.xlsx"
+    return bico_data, tanque_data, empresa, path_dac, path_xlsx

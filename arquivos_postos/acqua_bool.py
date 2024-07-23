@@ -1,5 +1,4 @@
 import openpyxl
-from save_to_sheet import save_to_sheet
 
 cnpj = "16527263000193"
 empresa = "AUTO POSTO ACQUA BOOL LTDA"
@@ -65,6 +64,6 @@ def get_data():
                 'Recebimento':list[10]
             })
 
-    save_to_sheet(bico_data, tanque_data, f"output/{cnpj}.xlsx")
     path_dac = f"input/dac/{cnpj}.txt"
-    return bico_data, tanque_data, empresa, path_dac
+    path_xlsx = f"output/{cnpj}.xlsx"
+    return bico_data, tanque_data, empresa, path_dac, path_xlsx

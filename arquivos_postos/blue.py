@@ -1,6 +1,5 @@
 import PyPDF2
 import re
-from save_to_sheet import save_to_sheet
 
 cnpj = "07783800000175"
 empresa = "AUTO POSTO BLUE LTDA"
@@ -77,6 +76,6 @@ def get_data():
                         'Fechamento': item['Campo2'],
                         'Afericao': item['Campo1']
                     })
-    save_to_sheet(bico, tanque, f"output/{cnpj}.xlsx")
+    path_xlsx = f"output/{cnpj}.xlsx"
     path_dac = f"input/dac/{cnpj}.txt"
-    return bico, tanque, empresa, path_dac
+    return bico, tanque, empresa, path_dac, path_xlsx
