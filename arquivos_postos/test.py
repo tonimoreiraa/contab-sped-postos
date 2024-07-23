@@ -3,8 +3,8 @@ import re
 def test(text):
     data = []
 
-    # Padrões regex para cada campo
-    produto_pattern = r"-\s(.+?)\s2\) D\. Inicial"
+   # Padrões regex para cada campo
+    produto_pattern = r"-\s*(.+?)\s*2\) D\. Inicial"
     estoque_abertura_pattern = r"3\.1\) Estoque de Abertura\s+([\d.,]+)"
     volume_recebido_pattern = r"4\.3\) Total Recebido\s+([\d.,]+)"
     vendas_bico_pattern = r"5\.6\) - Vendas Bico\s+([\d.,]+)\s+([\d.,]+)\s+([\d.,]+)\s+([\d.,]+)\s+([\d.,]+)\s+([\d.,]+)"
