@@ -1,5 +1,9 @@
 import PyPDF2
 import re
+from test import test
+
+cnpj = "25023880000142"
+empresa = "AUTO POSTO SMART LTDA  EPP"
 
 def extract_text_from_pdf(pdf_path):
     with open(pdf_path, "rb") as file:
@@ -50,12 +54,15 @@ def extract_movimentacao_por_tanques(texto):
     return movimentacao_tanques
 
 
-# Caminho do PDF fornecido
-pdf_path = 'ap smart.pdf'
+try:
+    file_path = f"input/relatorio/{cnpj}.pdf"
+except:
+    file_path = f"input/relatorio/{cnpj}.xlsx"
 
 # Extração do texto
-texto = extract_text_from_pdf(pdf_path)
-print(texto)
+texto = extract_text_from_pdf(file_path)
+#print(texto)
+test(texto)
 
 # Extração dos dados
 bico_data = extract_tanque_bico_data(texto)
