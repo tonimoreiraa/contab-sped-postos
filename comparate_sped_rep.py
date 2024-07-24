@@ -1,11 +1,11 @@
-from brisa_do_lago import get_data as get_data_brisa
-from alianca import get_data as get_data_alianca
-from blue import get_data as get_data_blue
+from model_c import get_data as get_data_brisa
+from model_e import get_data as get_data_alianca
+from model_b import get_data as get_data_blue
 from kilter import get_data as get_data_kilter
 from pe_cicero import get_data as get_data_pe_cicero
 from lagoa_mar import get_data as get_data_lagoa_mar
 from sobral import get_data as get_data_sobral
-from acqua_bool import get_data as get_data_acqua_bool
+from model_g import get_data as get_data_acqua_bool
 from mac import get_data as get_data_mac
 from verdes_campos import get_data as get_data_verdes_campos
 from smart import get_data as get_data_smart

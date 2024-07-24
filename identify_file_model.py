@@ -28,7 +28,7 @@ def identify_file_model(file_path):
             return 'D'
         
         reader.stream.seek(0)
-        version = reader.stream.readline().decode()
+        version = reader.stream.readline().decode('utf-8', errors='ignore')
         
         if '1.4' in version:
             return 'I'

@@ -1,9 +1,6 @@
 import PyPDF2
 import re
 
-cnpj = "07783800000175"
-empresa = "AUTO POSTO BLUE LTDA"
-
 def extract_data(file_path):
     pdf_reader = PyPDF2.PdfReader(file_path)
     extracted_data = []
@@ -27,16 +24,20 @@ def extract_data(file_path):
                     })
     return extracted_data
 
-def get_data():
-    try:
-        file_path = f"input/relatorio/{cnpj}.pdf"
-    except:
-        file_path = f"input/relatorio/{cnpj}.xlsx"
+def get_data(file_name):
+    p, x = ".pdf", ".xlsx"
+    cnpj = ""
+    if p in file_name:
+        cnpj = str(file_name).replace(p,"")
+    else:
+        cnpj = str(file_name).replace(x,"")
+
+    file_path = f"input/relatorio/{file_name}"
 
     extracted_data = extract_data(file_path)
 
-    bico_words = ['GC','GA','EH','ODB']
-    tanque_words = ['GAS','ETA','GASO','ETAN', 'DIE', 'GASOL']
+    bico_words = ['GC','DC','DS','GA','EC']
+    tanque_words = ['GAS', 'ETAN', 'DIES']
 
     bico = []
     tanque = []
@@ -61,13 +62,10 @@ def get_data():
     for item in extracted_data:
         if 'TANQUE' in item['Info']:
             for word in tanque_words:
-                pattern = r'\b{}\b'.format(re.escape(word))
-                if re.search(pattern, item['Info']) != None:
+                if word in item['Info']:
                     tanque_id = str(item['Info']).replace("TANQUE ", "")
                     tanque_id = tanque_id.replace("///", "")
-                    new_string = re.sub(pattern, '', tanque_id)
-                    new_string = re.sub(r'\s+', ' ', new_string).strip()
-                    tanque_id = new_string
+                    tanque_id = tanque_id.replace(word, "")
                     tanque_id = int(tanque_id)
                     tanque.append({
                         'Tanque': tanque_id,
@@ -78,4 +76,4 @@ def get_data():
                     })
     path_xlsx = f"output/{cnpj}.xlsx"
     path_dac = f"input/dac/{cnpj}.txt"
-    return bico, tanque, empresa, path_dac, path_xlsx
+    return bico, tanque, cnpj, path_dac, path_xlsx

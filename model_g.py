@@ -1,15 +1,15 @@
 import openpyxl
 
-cnpj = "16527263000193"
-empresa = "AUTO POSTO ACQUA BOOL LTDA"
+def get_data(file_name):
+    p, x = ".pdf", ".xlsx"
+    cnpj = ""
+    if p in file_name:
+        cnpj = str(file_name).replace(p,"")
+    else:
+        cnpj = str(file_name).replace(x,"")
 
-def get_data():
-    try:
-        file_path = f"input/relatorio/{cnpj}.pdf"
-        wb = openpyxl.load_workbook(file_path, data_only=True)
-    except:
-        file_path = f"input/relatorio/{cnpj}.xlsx"
-        wb = openpyxl.load_workbook(file_path, data_only=True)
+    file_path = f"input/relatorio/{file_name}"
+    wb = openpyxl.load_workbook(file_path, data_only=True)
       
     sheet = wb.active
 
@@ -66,4 +66,4 @@ def get_data():
 
     path_dac = f"input/dac/{cnpj}.txt"
     path_xlsx = f"output/{cnpj}.xlsx"
-    return bico_data, tanque_data, empresa, path_dac, path_xlsx
+    return bico_data, tanque_data, cnpj, path_dac, path_xlsx
