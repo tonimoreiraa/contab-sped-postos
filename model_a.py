@@ -1,9 +1,6 @@
 import PyPDF2
 import re
 
-cnpj = "03522014000163"
-empresa = "SOBRAL COMERCIO E SERVICOS LTDA"
-
 def extract_text_from_pdf(pdf_path):
     with open(pdf_path, "rb") as file:
         pdf_reader = PyPDF2.PdfReader(file)
@@ -59,11 +56,15 @@ def extract_tanque_data(texto):
 
     return movimentacao_tanques
 
-def get_data():
-    try:
-        file_path = f"input/relatorio/{cnpj}.pdf"
-    except:
-        file_path = f"input/relatorio/{cnpj}.xlsx"
+def get_data(file_name):
+    p, x = ".pdf", ".xlsx"
+    cnpj = ""
+    if p in file_name:
+        cnpj = str(file_name).replace(p,"")
+    else:
+        cnpj = str(file_name).replace(x,"")
+
+    file_path = f"input/relatorio/{file_name}"
 
     # Extração do texto
     texto = extract_text_from_pdf(file_path)
@@ -74,4 +75,4 @@ def get_data():
     
     path_xlsx = f"output/{cnpj}.xlsx"
     path_dac = f"input/dac/{cnpj}.txt"
-    return bico_data, tanque_data, empresa, path_dac, path_xlsx
+    return bico_data, tanque_data, cnpj, path_dac, path_xlsx

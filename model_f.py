@@ -1,33 +1,32 @@
 import openpyxl
-from save_to_sheet import save_to_sheet
 
-cnpj = "31391653000172"
-empresa = "COMERCIAL VERDES CAMPOS LTDA"
+def get_data(file_name):
+    p, x = ".pdf", ".xlsx"
+    cnpj = ""
+    if p in file_name:
+        cnpj = str(file_name).replace(p,"")
+    else:
+        cnpj = str(file_name).replace(x,"")
 
-def get_data():
-    try:
-        file_path = f"input/relatorio/{cnpj}.pdf"
-        wb = openpyxl.load_workbook(file_path, data_only=True)
-    except:
-        file_path = f"input/relatorio/{cnpj}.xlsx"
-        wb = openpyxl.load_workbook(file_path, data_only=True)
+    file_path = f"input/relatorio/{file_name}"
+    wb = openpyxl.load_workbook(file_path, data_only=True)
 
     sheet = wb.active
+    sheet = wb["Plan1"]
 
     init = None
     end = None
-
     for row in sheet.iter_rows():
-        if "BOMBA" in str(row[0].value):
+        if "MOVIMENTAÇÃO DE BOMBAS BICOS E LACRES" in str(row[0].value):
             init = row[0].row
-        elif "TANTQUE" in str(row[0].value):
+        elif "INFORMAÇÕES MENSAIS DE ESTOQUES DE COMBUSTÍVEIS" in str(row[0].value):
             end = row[0].row
             break  
 
     list_of_dicts = []
 
     if init is not None and end is not None and init < end:
-        for i in range(init + 1, end):  # init + 1 to skip the header
+        for i in range(init + 10, end):  # init + 8 to skip the header
             row_dict = {cell.column: cell.value for cell in sheet[i] if cell.value is not None}
             list_of_dicts.append(row_dict)  
     else:
@@ -38,21 +37,21 @@ def get_data():
         if list:
             try:
                 bico_data.append({
-                    'Bico':list[4],
-                    'Produto':list[5],
-                    'Abertura':list[6],
-                    'Fechamento':list[7],
-                    'Sem_intervencao':None,
-                    'Com_intervencao':None,
-                    #'Lacre':list[3],
-                    'Afericao':list[9]
+                    'Bico':list[5],
+                    'Produto':list[6],
+                    'Abertura':list[8],
+                    'Fechamento':list[9],
+                    'Sem_intervencao':list[10],
+                    'Com_intervencao': None,
+                    #'Lacre':list[12],
+                    'Afericao':list[13]
                 })
             except:
                 pass
-    
+
     list_of_dicts = []
 
-    for i in range(end + 1, sheet.max_row):  # end + 1 to skip the header
+    for i in range(end + 9, sheet.max_row):  # end + 8 to skip the header
         row_dict = {cell.column: cell.value for cell in sheet[i] if cell.value is not None}
         list_of_dicts.append(row_dict)
 
@@ -63,13 +62,13 @@ def get_data():
                 tanque_data.append({
                     'Tanque':list[1],
                     'Produto':list[2],
-                    'Abertura':list[5],
+                    'Abertura':list[4],
                     'Fechamento':list[7],
-                    'Recebimento':list[6]
+                    'Recebimento':list[9]
                 })
             except:
                 pass
 
     path_dac = f"input/dac/{cnpj}.txt"
     path_xlsx = f"output/{cnpj}.xlsx"
-    return bico_data, tanque_data, empresa, path_dac, path_xlsx
+    return bico_data, tanque_data, cnpj, path_dac, path_xlsx

@@ -1,13 +1,13 @@
 from model_c import get_data as get_data_brisa
 from model_e import get_data as get_data_alianca
 from model_b import get_data as get_data_blue
-from kilter import get_data as get_data_kilter
+from model_i import get_data as get_data_kilter
 from pe_cicero import get_data as get_data_pe_cicero
-from lagoa_mar import get_data as get_data_lagoa_mar
-from sobral import get_data as get_data_sobral
+from model_d import get_data as get_data_lagoa_mar
+from model_a import get_data as get_data_sobral
 from model_g import get_data as get_data_acqua_bool
-from mac import get_data as get_data_mac
-from verdes_campos import get_data as get_data_verdes_campos
+from model_f import get_data as get_data_mac
+from model_h import get_data as get_data_verdes_campos
 from smart import get_data as get_data_smart
 from sped_vs_rep import sped_vs_rep
 
