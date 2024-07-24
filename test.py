@@ -6,7 +6,7 @@ sheet = wb.active
 sheet = wb["Plan1"]
 
 for row in sheet.iter_rows():
-    if row[6].value == 344:
-        row[6].value = 200
+    if row[6].value == 200:
+        row[6].value = 344
 
 wb.save('input/relatorio/10800554000127.xlsx')

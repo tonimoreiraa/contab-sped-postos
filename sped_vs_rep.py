@@ -41,11 +41,13 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
             fechamento_rep = format_value(bicos['Fechamento'])
             if int(bicos['Bico']) == int(id_bico):
                 if abertura_sped != abertura_rep:
+                    errors_ab += 1
                     errors += 1
                     print(f"Bico [{bicos['Bico']}] apresentou {errors} divergências no valor de |abertura|")
                     print(f"----Valor no relatório: {abertura_rep}| ----Valor no SPED: {abertura_sped}")
                     
                 if fechamento_sped != fechamento_rep:
+                    errors_fe += 1
                     errors += 1
                     print(f"Bico [{bicos['Bico']}] apresentou {errors} divergências no valor de |fechamento|")
                     print(f"----Valor no relatório: {fechamento_rep}| ----Valor no SPED: {fechamento_sped}")
