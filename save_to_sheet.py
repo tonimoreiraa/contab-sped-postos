@@ -8,7 +8,7 @@ def save_to_sheet(bico_data, tanque_data, file_path):
     ws_bico.title = 'Bico'
 
     # Define o cabeçalho (se necessário)
-    headers = ["Bico", "Produto", "Abertura", "Fechamento", "Sem_intervencao", "Com_intervencao", "Afericao", "Obs"]
+    headers = ["Bico", "Produto", "Abertura", "Fechamento", "Sem_intervencao", "Com_intervencao", "Afericao", "Obs_relatorio", "Obs_sped"]
     for col_num, header in enumerate(headers, start=1):
         ws_bico.cell(row=1, column=col_num, value=header)
     
@@ -21,7 +21,7 @@ def save_to_sheet(bico_data, tanque_data, file_path):
     ws_tanque = wb.create_sheet(title='Tanque')
 
     # Define o cabeçalho (se necessário)
-    headers_tanque = ["Tanque", "Produto", "Abertura", "Fechamento", "Recebimento", "Obs"]
+    headers_tanque = ["Tanque", "Produto", "Abertura", "Fechamento", "Recebimento", "Obs_relatorio", "Obs_sped"]
     for col_num, header in enumerate(headers_tanque, start=1):
         ws_tanque.cell(row=1, column=col_num, value=header)
     

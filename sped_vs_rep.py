@@ -1,4 +1,4 @@
-from sped import read_input
+from sped import check_sped
 from save_to_sheet import save_to_sheet
 
 def format_value(value):
@@ -16,21 +16,18 @@ def format_value(value):
         
 def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, xlsx_path):
     print(f"*** Processamento de dados da empresa {empresa} Iniciado... ***")
-    data_from_sped = read_input(input_path)
+    
+    data_from_sped = check_sped(input_path)
     tanque_data_from_sped, bico_data_from_sped = data_from_sped
 
     first_last_bicos = {}
 
     for bicos in bico_data_from_sped:
-        #sorted_bicos = sorted(bico_data_from_sped[bicos], key=lambda x: convert_to_float(x['fechamento']))
         for rows in bico_data_from_sped[bicos]:
             bico_id = rows['bico']
             if bico_id not in first_last_bicos:
-                # Inicializa o dicionário com a primeira ocorrência
                 first_last_bicos[bico_id] = {'first': rows, 'last': rows}
-                #print(first_last_bicos)
             else:
-                # Atualiza a última ocorrência
                 first_last_bicos[bico_id]['last'] = rows
 
     for bicos in bico_data_from_rep:
@@ -54,10 +51,10 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
                     print(f"----Valor no relatório: {fechamento_rep}| ----Valor no SPED: {fechamento_sped}")
                     
         if errors == 0:
-            bicos['Obs'] = "VERDADEIRO"
+            bicos['Obs_relatorio'] = "Validado com sucesso! Nenhuma divergência entre o SPED e o relatório foi encontrada!"
             print(f"Bico [{bicos['Bico']}] foi validado com sucesso! Nenhuma divergência encontrada.")
         else:
-            bicos['Obs'] = "FALSO"
+            bicos['Obs_relatorio'] = "Divergência entre o SPED e o relatório!"
 
     first_last_tanques = {}
 
@@ -88,10 +85,10 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
                     print(f"Tanque [{tanques['Tanque']}] apresentou {errors} divergências no valor de |fechamento|:")
                     print(f"----Valor no relatório: {fechamento_rep}| ----Valor no SPED: {fechamento_sped}")
         if errors == 0:
-            tanques['Obs'] = "VERDADEIRO"
+            tanques['Obs_relatorio'] = "Validado com sucesso! Nenhuma divergência entre o SPED e o relatório foi encontrada!"
             print(f"Tanque [{tanques['Tanque']}] foi validado com sucesso! Nenhuma divergência encontrada.")
         else:
-            tanques['Obs'] = "FALSO"
+            tanques['Obs_relatorio'] = "Divergência entre o SPED e o relatório!"
 
     save_to_sheet(bico_data_from_rep, tanque_data_from_rep, xlsx_path)
     print(f"*** Processamento de dados da empresa {empresa} finalizado! ***")

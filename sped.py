@@ -38,23 +38,32 @@ def is_closure_equal_to_opening(first_row, next_row):
     
     return first_row['fechamento'] == next_row['abertura']
 
-"""data = read_input(input_path)
-tanque_data, bico_data = data
-type = 'tanque'
+def check_sped(input_path):
+    data = read_input(input_path)
+    tanque_data, bico_data = data
+    type = 'tanque'
 
-for rows in data:
-    for id in rows.keys():
-        errors = 0
-        rows_length = len(rows[id])
-        for i in range(0, rows_length):
-            if i < rows_length - 1:
-                if not is_closure_equal_to_opening(rows[id][i], rows[id][i+1]):
-                    row = rows[id][i]
-                    next_row = rows[id][i+1]
-                    errors = errors + 1
-                    print('%s %s com fechamento %s é diferente da próxima abertura (%s: %s)' % (type, row[type], row['fechamento'], next_row[type], next_row['abertura'] ))
+    for rows in data:
+        for id in rows.keys():
+            errors = 0
+            rows_length = len(rows[id])
+            for i in range(0, rows_length):
+                if i < rows_length - 1:
+                    if type == 'bico':
+                        bico_data[id][i]["Obs_sped"] = "Nenhuma divergência encontrada."
+                    else:
+                        tanque_data[id][i]["Obs_sped"] = "Nenhuma divergência encontrada."
+                    if not is_closure_equal_to_opening(rows[id][i], rows[id][i+1]):
+                        row = rows[id][i]
+                        next_row = rows[id][i+1]
+                        errors = errors + 1
+                        print('%s %s com fechamento %s é diferente da próxima abertura (%s: %s)' % (type, row[type], row['fechamento'], next_row[type], next_row['abertura'] ))
+                        if type == 'bico':
+                            bico_data[id][i]["Obs_sped"] = f"Fechamento {row['fechamento']} é diferente da próxima abertura {next_row[type]} : {next_row['abertura']}"
+                        else:
+                            tanque_data[id][i]["Obs_sped"] = f"Fechamento {row['fechamento']} é diferente da próxima abertura {next_row[type]} : {next_row['abertura']}"
 
-        print('Conferência %s %s com %s/%s erros' % (type, id, errors, rows_length))
-        
-    type = 'bico'
-"""
+            print('Conferência %s %s com %s/%s erros' % (type, id, errors, rows_length))
+            
+        type = 'bico'
+    return tanque_data, bico_data
