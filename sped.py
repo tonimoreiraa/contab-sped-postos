@@ -51,8 +51,10 @@ def check_sped(input_path):
                 if i < rows_length - 1:
                     if type == 'bico':
                         bico_data[id][i]["Obs_sped"] = "Nenhuma divergência encontrada."
+                        #print(f"Abertura bico {bico_data[id][i]['bico']} = {bico_data[id][i]['abertura']} / Fechamento = {bico_data[id][i]['fechamento']}")
                     else:
                         tanque_data[id][i]["Obs_sped"] = "Nenhuma divergência encontrada."
+                        #print(f"Tanque bico {tanque_data[id][i]['tanque']} = {tanque_data[id][i]['abertura']} / Fechamento = {tanque_data[id][i]['fechamento']}")
                     if not is_closure_equal_to_opening(rows[id][i], rows[id][i+1]):
                         row = rows[id][i]
                         next_row = rows[id][i+1]
