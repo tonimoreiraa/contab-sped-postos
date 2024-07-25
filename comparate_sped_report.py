@@ -31,6 +31,9 @@ model_dict = {
 for file in files:
     file_path = dir+file
     model = identify_file_model(file_path)
-    bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path = model_dict[model](file)
-    sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path)
+    if model != 'Modelo desconhecido':
+        bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path = model_dict[model](file)
+        sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path)
+    else:
+        print('Arquivo com modelo desconhecido: %s' % (file_path))
 
