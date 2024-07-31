@@ -56,16 +56,7 @@ def extract_tanque_data(texto):
 
     return movimentacao_tanques
 
-def get_data(file_name):
-    p, x = ".pdf", ".xlsx"
-    cnpj = ""
-    if p in file_name:
-        cnpj = str(file_name).replace(p,"")
-    else:
-        cnpj = str(file_name).replace(x,"")
-
-    file_path = f"input/relatorio/{file_name}"
-
+def get_data(cnpj, file_path):
     # Extração do texto
     texto = extract_text_from_pdf(file_path)
 

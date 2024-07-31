@@ -1,51 +1,38 @@
-input_path = './data-example.txt'
+import os
+from input import read_input
+from daily_check import daily_check
+from identify_models import identify_report_model
+from models import models
+from sum_data import sum_input_data
 
-def read_input():
-    input_file = open(input_path, 'r')
-    content = input_file.read()
-    tanque_data = {}
-    bico_data = {}
-    for row in content.split('\n'):
-        row_data = row.split('|')
-        if len(row_data) > 1:
-            if row_data[1] == '1310':
-                tanque_id = row_data[2]
-                if not tanque_id in tanque_data:
-                    tanque_data[tanque_id] = []
-                keys = ['tanque', 'abertura', 'recebimento', 'estoque disponivel', 'venda', 'estoque escritural', 'ganho', 'perda', 'fechamento']
-                dict = { key: value for key, value in zip(keys, row_data[2:]) }
-                tanque_data[tanque_id].append(dict)
-            elif row_data[1] == '1320':
-                bico_id = row_data[2]
-                if not bico_id in bico_data:
-                    bico_data[bico_id] = []
-                keys = ['bico', 'fechamento', 'abertura', 'aferição', 'venda']
-                row_data = [row_data[2]] + row_data[8:]
-                dict = { key: value for key, value in zip(keys, row_data) }
-                bico_data[bico_id].append(dict)
+input_path = 'input/dac'
+report_path = 'input/relatorio'
 
-    return [tanque_data, bico_data]
+files_and_dirs = os.listdir(input_path)
+cnpjs = [f.replace('.txt', '') for f in files_and_dirs if os.path.isfile(os.path.join(input_path, f))]
 
-def is_closure_equal_to_opening(first_row, next_row):
-    if not next_row:
-        return True
+
+for cnpj in cnpjs:
+    input_data = read_input(os.path.join(input_path, cnpj + '.txt'))
+    daily_output = daily_check(input_data)
+    # TODO: save daily_output to output xlsx
+
+    report_file_path = os.path.join(report_path, cnpj)
+    if os.path.exists(report_file_path + '.pdf'):
+        report_file_path = report_file_path + '.pdf'
+    else:
+        report_file_path = report_file_path + '.xlsx'
+
+    report_model = identify_report_model(report_file_path)
+
+    report_data = None
+    if report_model != 'Modelo desconhecido':
+        report_data = models[report_model](cnpj, report_file_path)
+    else:
+        print(f'Relatório do CNPJ {cnpj} não foi reconhecido como um modelo cadastrado')
+
+    # TODO: Verificar se report_data bate com input_data
     
-    return first_row['fechamento'] == next_row['abertura']
-
-data = read_input()
-tanque_data, bico_data = data
-type = 'tanque'
-for rows in data:
-    for id in rows.keys():
-        errors = 0
-        rows_length = len(rows[id])
-        for i in range(0, rows_length):
-            if i < rows_length - 1:
-                if not is_closure_equal_to_opening(rows[id][i], rows[id][i+1]):
-                    row = rows[id][i]
-                    next_row = rows[id][i+1]
-                    errors = errors + 1
-                    print('%s %s com fechamento %s é diferente da próxima abertura (%s: %s)' % (type, row[type], row['fechamento'], next_row[type], next_row['abertura'] ))
-        
-        print('Conferência %s %s com %s/%s erros' % (type, id, errors, rows_length))
-    type = 'bico'
+    sum_data = sum_input_data(input_data)
+    
+    # TODO: Verificar se sum_data base com report_data

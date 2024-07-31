@@ -2,7 +2,7 @@ import os
 from PyPDF2 import PdfReader
 from openpyxl import load_workbook
 
-def identify_file_model(file_path):
+def identify_report_model(file_path):
     file_extension = os.path.splitext(file_path)[1].lower()
 
     if file_extension == '.pdf':

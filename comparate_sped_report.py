@@ -1,5 +1,5 @@
 import os
-from identify_file_model import identify_file_model
+from identify_models import identify_report_model
 from sped_vs_rep import sped_vs_rep
 import model_a
 import model_b
@@ -30,7 +30,7 @@ model_dict = {
 
 for file in files:
     file_path = dir+file
-    model = identify_file_model(file_path)
+    model = identify_report_model(file_path)
     if model != 'Modelo desconhecido':
         bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path = model_dict[model](file)
         sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path)

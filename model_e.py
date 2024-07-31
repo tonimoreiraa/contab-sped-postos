@@ -24,15 +24,9 @@ def extract_data(file_path):
                     })
     return extracted_data
 
-def get_data(file_name):
-    p, x = ".pdf", ".xlsx"
-    cnpj = ""
-    if p in file_name:
-        cnpj = str(file_name).replace(p,"")
-    else:
-        cnpj = str(file_name).replace(x,"")
+def get_data(cnpj, file_path):
+   
 
-    file_path = f"input/relatorio/{file_name}"
 
     extracted_data = extract_data(file_path)
 

@@ -80,15 +80,9 @@ def extract_tanque_data(linhas):
     return dados_tanques
 
 
-def get_data(file_name):
-    p, x = ".pdf", ".xlsx"
-    cnpj = ""
-    if p in file_name:
-        cnpj = str(file_name).replace(p,"")
-    else:
-        cnpj = str(file_name).replace(x,"")
+def get_data(cnpj, file_path):
+   
 
-    file_path = f"input/relatorio/{file_name}"
 
     # Extração do texto
     lines = extract_text_from_pdf(file_path)
