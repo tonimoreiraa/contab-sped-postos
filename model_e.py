@@ -24,50 +24,48 @@ def extract_data(file_path):
                     })
     return extracted_data
 
+def capture_tank_number(input_string):
+    # Divide a string em partes por espaços
+    parts = input_string.split()
+    # Captura o número do tanque (segundo elemento da lista)
+    tank_number = parts[1]
+    # Remove zeros à esquerda
+    cleaned_number = tank_number.lstrip('0')
+    # Se cleaned_number estiver vazio após remover zeros à esquerda, significa que era "00000"
+    return cleaned_number if cleaned_number else '0'
+
 def get_data(cnpj, file_path):
-   
-
-
     extracted_data = extract_data(file_path)
-
-    bico_words = ['GC','DC','DS','GA','EC']
-    tanque_words = ['GAS', 'ETAN', 'DIES']
 
     bico = []
     tanque = []
+    bico_tanque_data = []
     for item in extracted_data:
         if 'Produto' in item['Info']:
             break
         else:
-            for word in bico_words:
-                if word in item['Info']:
-                    bico_id = str(item['Info']).replace(word, "")
-                    bico_id = int(bico_id)
-                    bico.append({
-                        'Bico': bico_id,
-                        'Produto': word, 
-                        'Abertura': item['Abertura'],
-                        'Fechamento': item['Fechamento'],
-                        'Sem_intervencao': None,
-                        'Com_intervencao': None,
-                        'Afericao': item['Campo1']
-                    })
+            try:
+                bico_id = ''.join(filter(str.isdigit, item['Info']))
+                bico_tanque_data.append({
+                    'type': 'bico',
+                    'bico': int(bico_id),
+                    'abertura': item['Abertura'],
+                    'fechamento': item['Fechamento'],
+                    'afericao': item['Campo1']
+                })
+            except:
+                pass
                 
     for item in extracted_data:
         if 'TANQUE' in item['Info']:
-            for word in tanque_words:
-                if word in item['Info']:
-                    tanque_id = str(item['Info']).replace("TANQUE ", "")
-                    tanque_id = tanque_id.replace("///", "")
-                    tanque_id = tanque_id.replace(word, "")
-                    tanque_id = int(tanque_id)
-                    tanque.append({
-                        'Tanque': tanque_id,
-                        'Produto': word, 
-                        'Abertura': item['Abertura'], 
-                        'Fechamento': item['Campo2'],
-                        'Afericao': item['Campo1']
-                    })
+            tanque_id = capture_tank_number(item['Info'])
+            bico_tanque_data.append({
+                'type': 'tanque',
+                'tanque': int(tanque_id),
+                'abertura': item['Abertura'], 
+                'fechamento': item['Campo2'],
+                'recebimento': None
+            })
     path_xlsx = f"output/{cnpj}.xlsx"
     path_dac = f"input/dac/{cnpj}.txt"
-    return bico, tanque, cnpj, path_dac, path_xlsx
+    return bico_tanque_data, cnpj, path_dac, path_xlsx

@@ -35,8 +35,8 @@ def capture_tank_number(input_string):
     return cleaned_number if cleaned_number else '0'
 
 def get_data(cnpj, file_path):
-
     extracted_data = extract_data(file_path)
+    
     bico = []
     tanque = []
     bico_tanque_data = []
