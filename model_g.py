@@ -1,4 +1,5 @@
 import openpyxl
+from format_value import format_value
 
 def get_data(cnpj, file_path):
     wb = openpyxl.load_workbook(file_path, data_only=True)
@@ -32,12 +33,12 @@ def get_data(cnpj, file_path):
                 'type':'bico',
                 'bico':list[2],
                 #'Produto':list[3],
-                'abertura':list[5],
-                'fechamento':list[6],
+                'abertura':format_value(list[5]),
+                'fechamento':format_value(list[6]),
                 #'Sem_intervencao':list[8],
                 #'Com_intervencao':list[9],
                 #'Lacre':list[10],
-                'afericao':list[11]
+                'afericao':format_value(list[11])
             })
 
     list_of_dicts = []
@@ -53,9 +54,9 @@ def get_data(cnpj, file_path):
                 'type':'tanque',
                 'tanque':list[1],
                 #'Produto':list[2],
-                'abertura':list[5],
-                'fechamento':list[8],
-                'recebimento':list[10]
+                'abertura':format_value(list[5]),
+                'fechamento':format_value(list[8]),
+                'recebimento':format_value(list[10])
             })
 
     bico_tanque_data = []

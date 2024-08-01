@@ -1,4 +1,5 @@
 import openpyxl
+from format_value import format_value
 
 def get_data(cnpj, file_path):
     wb = openpyxl.load_workbook(file_path, data_only=True)
@@ -32,12 +33,12 @@ def get_data(cnpj, file_path):
                     'type':'bico',
                     'bico':list[4],
                     #'Produto':list[5],
-                    'abertura':list[6],
-                    'fechamento':list[7],
+                    'abertura':format_value(list[6]),
+                    'fechamento':format_value(list[7]),
                     #'Sem_intervencao':None,
                     #'Com_intervencao':None,
                     #'Lacre':list[3],
-                    'afericao':list[9]
+                    'afericao':format_value(list[9])
                 })
             except:
                 pass
@@ -56,9 +57,9 @@ def get_data(cnpj, file_path):
                     'type':'tanque',
                     'tanque':list[1],
                     #'Produto':list[2],
-                    'abertura':list[5],
-                    'fechamento':list[7],
-                    'recebimento':list[6]
+                    'abertura':format_value(list[5]),
+                    'fechamento':format_value(list[7]),
+                    'recebimento':format_value(list[6])
                 })
             except:
                 pass

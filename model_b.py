@@ -1,5 +1,6 @@
 import PyPDF2
 import re
+from format_value import format_value
 
 def extract_data(file_path):
     pdf_reader = PyPDF2.PdfReader(file_path)
@@ -49,9 +50,9 @@ def get_data(cnpj, file_path):
                 bico_tanque_data.append({
                     'type': 'bico',
                     'bico': int(bico_id),
-                    'abertura': item['Abertura'],
-                    'fechamento': item['Fechamento'],
-                    'afericao': item['Campo1']
+                    'abertura': format_value(item['Abertura']),
+                    'fechamento': format_value(item['Fechamento']),
+                    'afericao': format_value(item['Campo1'])
                 })
             except:
                 pass
@@ -62,8 +63,8 @@ def get_data(cnpj, file_path):
             bico_tanque_data.append({
                 'type': 'tanque',
                 'tanque': int(tanque_id),
-                'abertura': item['Abertura'], 
-                'fechamento': item['Campo2'],
+                'abertura': format_value(item['Abertura']), 
+                'fechamento': format_value(item['Campo2']),
                 'recebimento': None
             })
 

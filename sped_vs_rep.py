@@ -36,8 +36,8 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
             abertura_sped = format_value(first_last_bicos[id_bico]['first']['abertura'])
             fechamento_sped = format_value(first_last_bicos[id_bico]['last']['fechamento'])
 
-            abertura_rep = format_value(bicos['abertura'])
-            fechamento_rep = format_value(bicos['fechamento'])
+            abertura_rep = bicos['abertura']
+            fechamento_rep = bicos['fechamento']
             
             if int(bicos['bico']) == int(id_bico):
                 if abertura_sped != abertura_rep:
@@ -77,8 +77,8 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
             abertura_sped = format_value(first_last_tanques[id_tanque]['first']['abertura'])
             fechamento_sped = format_value(first_last_tanques[id_tanque]['last']['fechamento'])
 
-            abertura_rep = format_value(tanques['abertura'])
-            fechamento_rep = format_value(tanques['fechamento'])
+            abertura_rep = tanques['abertura']
+            fechamento_rep = tanques['fechamento']
             if int(tanques['tanque']) == int(id_tanque):
                 if abertura_sped != abertura_rep:
                     errors_ab += 1

@@ -1,5 +1,6 @@
 import PyPDF2
 import re
+from format_value import format_value
 
 def extract_data(file_path):
     pdf_reader = PyPDF2.PdfReader(file_path)
@@ -16,10 +17,10 @@ def extract_data(file_path):
                 if all(match):  # Garante que todas as informações foram extraídas
                     extracted_data.append({
                         'Info': match[0],
-                        'Abertura': match[1],
-                        'Fechamento': match[2],
-                        'Campo1': match[4],
-                        'Campo2': match[5],
+                        'Abertura': format_value(match[1]),
+                        'Fechamento': format_value(match[2]),
+                        'Campo1': format_value(match[4]),
+                        'Campo2': format_value(match[5]),
 
                     })
     return extracted_data

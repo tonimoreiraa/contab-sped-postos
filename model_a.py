@@ -1,5 +1,6 @@
 import PyPDF2
 import re
+from format_value import format_value
 
 def extract_text_from_pdf(pdf_path):
     with open(pdf_path, "rb") as file:
@@ -23,9 +24,9 @@ def extract_bico_data(texto):
             dados_extracao.append({
                 "type": "bico",
                 "bico": bico,
-                "abertura": abertura,
-                "fechamento": fechamento,
-                "afericao": afericao
+                "abertura": format_value(abertura),
+                "fechamento": format_value(fechamento),
+                "afericao": format_value(afericao)
             })
 
     return dados_extracao
@@ -47,9 +48,9 @@ def extract_tanque_data(texto):
             movimentacao_tanques.append({
                 "type": "tanque",
                 "tanque": tanque,
-                "abertura": estoque_abertura,
-                "fechamento": estoque_fechamento,
-                "recebimento": recebimentos
+                "abertura": format_value(estoque_abertura),
+                "fechamento": format_value(estoque_fechamento),
+                "recebimento": format_value(recebimentos)
             })
 
     return movimentacao_tanques

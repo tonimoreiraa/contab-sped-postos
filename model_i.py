@@ -1,5 +1,6 @@
 import PyPDF2
 import re
+from format_value import format_value
 
 def extract_text_from_pdf(pdf_path):
     with open(pdf_path, "rb") as file:
