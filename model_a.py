@@ -21,13 +21,11 @@ def extract_bico_data(texto):
         if match_dados:
             bico, abertura, fechamento, afericao, nserie, sem_intervencao,  com_intervencao = match_dados.groups()
             dados_extracao.append({
-                "Bico": bico,
-                "Produto": None, # to add
-                "Abertura": abertura,
-                "Fechamento": fechamento,
-                "Sem_intervencao": sem_intervencao,
-                "Com_intervencao": com_intervencao,
-                "Afericao": afericao
+                "type": "bico",
+                "bico": bico,
+                "abertura": abertura,
+                "fechamento": fechamento,
+                "afericao": afericao
             })
 
     return dados_extracao
@@ -47,11 +45,11 @@ def extract_tanque_data(texto):
             except:
                 pass
             movimentacao_tanques.append({
-                "Tanque": tanque,
-                "Produto": produto,
-                "Abertura": estoque_abertura,
-                "Fechamento": estoque_fechamento,
-                "Recebimento": recebimentos
+                "type": "tanque",
+                "tanque": tanque,
+                "abertura": estoque_abertura,
+                "fechamento": estoque_fechamento,
+                "recebimento": recebimentos
             })
 
     return movimentacao_tanques
@@ -63,7 +61,12 @@ def get_data(cnpj, file_path):
     # Extração dos dados
     bico_data = extract_bico_data(texto)
     tanque_data = extract_tanque_data(texto)
+    bico_tanque_data = []
+    for bico in bico_data:
+        bico_tanque_data.append(bico)
+    for tanque in tanque_data:
+        bico_tanque_data.append(tanque)
     
     path_xlsx = f"output/{cnpj}.xlsx"
     path_dac = f"input/dac/{cnpj}.txt"
-    return bico_data, tanque_data, cnpj, path_dac, path_xlsx
+    return bico_tanque_data, cnpj, path_dac, path_xlsx
