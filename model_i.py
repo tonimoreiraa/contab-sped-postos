@@ -30,14 +30,15 @@ def extract_bico_data(linhas):
     for match in matches:
         lacre, afericao, com_interv, bomba, encerrante_final, encerrante_inicial, combustivel, tanque, bico, sem_interv = match
         dados_bicos.append({
+            "type":"bico",
             #"Lacre": int(lacre),
-            "Bico": int(bico),
-            "Produto": combustivel.strip(),
-            "Abertura": float(encerrante_inicial.replace(".", "").replace(",", ".")),
-            "Fechamento": float(encerrante_final.replace(".", "").replace(",", ".")),
-            "Sem_intervenção": float(sem_interv.replace(".", "").replace(",", ".")),
-            "Com_intervenção": float(com_interv.replace(".", "").replace(",", ".")),
-            "Aferição": float(afericao.replace(".", "").replace(",", ".")),
+            "bico": int(bico),
+            #"produto": combustivel.strip(),
+            "abertura": float(encerrante_inicial.replace(".", "").replace(",", ".")),
+            "fechamento": float(encerrante_final.replace(".", "").replace(",", ".")),
+            #"Sem_intervenção": float(sem_interv.replace(".", "").replace(",", ".")),
+            #"Com_intervenção": float(com_interv.replace(".", "").replace(",", ".")),
+            "aferição": float(afericao.replace(".", "").replace(",", ".")),
             #"Bomba": int(bomba),
             #"Tanque": int(tanque),
         })
@@ -69,28 +70,32 @@ def extract_tanque_data(linhas):
     for match in matches:
         perdas_sobras, estoque_fechamento, vendas, recebimentos, estoque_abertura, item, tanque = match.groups()
         dados_tanques.append({
+            "type":"tanque",
             #"Perdas Sobras": float(perdas_sobras.replace(".", "").replace(",", ".")),
-            "Tanque": int(tanque),
-            "Produto": item.strip(),
-            "Abertura": float(estoque_abertura.replace(".", "").replace(",", ".")),
-            "Fechamento": float(estoque_fechamento.replace(".", "").replace(",", ".")),
+            "tanque": int(tanque),
+            #"Produto": item.strip(),
+            "abertura": float(estoque_abertura.replace(".", "").replace(",", ".")),
+            "fechamento": float(estoque_fechamento.replace(".", "").replace(",", ".")),
             #"Vendas": float(vendas.replace(".", "").replace(",", ".")),
-            "Recebimento": float(recebimentos.replace(".", "").replace(",", ".")),
+            "recebimento": float(recebimentos.replace(".", "").replace(",", ".")),
         })
     return dados_tanques
 
 
 def get_data(cnpj, file_path):
-   
-
-
     # Extração do texto
     lines = extract_text_from_pdf(file_path)
 
     # Extração dos dados
     bico_data = extract_bico_data(lines)
     tanque_data = extract_tanque_data(lines)
+
+    bico_tanque_data = []
+    for bico in bico_data:
+        bico_tanque_data.append(bico)
+    for tanque in tanque_data:
+        bico_tanque_data.append(tanque)
     
     path_xlsx = f"output/{cnpj}.xlsx"
     path_dac = f"input/dac/{cnpj}.txt"
-    return bico_data, tanque_data, cnpj, path_dac, path_xlsx
+    return bico_tanque_data, cnpj, path_dac, path_xlsx
