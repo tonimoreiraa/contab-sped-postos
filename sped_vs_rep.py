@@ -9,8 +9,8 @@ def format_value(value):
         # Converter para float e formatar com duas casas decimais
         value_float = float(value)
         value_formated = "{:.2f}".format(value_float)
-        
-        return float(value_formated.replace('.', ','))
+        #value_formated = value_formated.replace('.', ',')
+        return float(value_formated)
     except ValueError:
         return value
         
@@ -38,6 +38,7 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
 
             abertura_rep = format_value(bicos['abertura'])
             fechamento_rep = format_value(bicos['fechamento'])
+            
             if int(bicos['bico']) == int(id_bico):
                 if abertura_sped != abertura_rep:
                     errors_ab += 1
