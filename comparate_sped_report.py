@@ -34,8 +34,13 @@ for file in files:
     if model != 'Modelo desconhecido':
         cnpj = ''.join(filter(str.isdigit, file))
         bico_tanque_data, company, path_dac, xlsx_path = model_dict[model](cnpj, file_path)
-        print(bico_tanque_data)
-        #sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path)
+        bico_data, tanque_data = [], []
+        for data in bico_tanque_data:
+            if data['type'] == 'bico':
+                bico_data.append(data)
+            else:
+                tanque_data.append(data)
+        sped_vs_rep(bico_data, tanque_data, company, path_dac, xlsx_path)
     else:
         print('Arquivo com modelo desconhecido: %s' % (file_path))
 

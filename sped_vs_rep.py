@@ -2,7 +2,6 @@ from sped import check_sped
 from save_to_sheet import save_to_sheet
 
 def format_value(value):
-    """Converte uma string formatada com vírgula em float"""
     try:
         value = str(value)
         value = value.replace('.', '').strip()
@@ -11,7 +10,7 @@ def format_value(value):
         value_float = float(value)
         value_formated = "{:.2f}".format(value_float)
         
-        return value_formated.replace('.', ',')
+        return float(value_formated.replace('.', ','))
     except ValueError:
         return value
         
@@ -37,23 +36,23 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
             abertura_sped = format_value(first_last_bicos[id_bico]['first']['abertura'])
             fechamento_sped = format_value(first_last_bicos[id_bico]['last']['fechamento'])
 
-            abertura_rep = format_value(bicos['Abertura'])
-            fechamento_rep = format_value(bicos['Fechamento'])
-            if int(bicos['Bico']) == int(id_bico):
+            abertura_rep = format_value(bicos['abertura'])
+            fechamento_rep = format_value(bicos['fechamento'])
+            if int(bicos['bico']) == int(id_bico):
                 if abertura_sped != abertura_rep:
                     errors_ab += 1
                     errors += 1
-                    print(f"Bico [{bicos['Bico']}] apresentou {errors} divergências no valor de |abertura|")
+                    print(f"bico [{bicos['bico']}] apresentou {errors} divergências no valor de |abertura|")
                     print(f"----Valor no relatório: {abertura_rep}| ----Valor no SPED: {abertura_sped}")
                     
                 if fechamento_sped != fechamento_rep:
                     errors_fe += 1
                     errors += 1
-                    print(f"Bico [{bicos['Bico']}] apresentou {errors} divergências no valor de |fechamento|")
+                    print(f"bico [{bicos['bico']}] apresentou {errors} divergências no valor de |fechamento|")
                     print(f"----Valor no relatório: {fechamento_rep}| ----Valor no SPED: {fechamento_sped}")
                     
         if errors == 0:
-            print(f"Tanque [{bicos['Bico']}] foi validado com sucesso! Nenhuma divergência encontrada.")
+            print(f"bico [{bicos['bico']}] foi validado com sucesso! Nenhuma divergência encontrada.")
             bicos['Obs_relatorio'] = "Validado com sucesso! Nenhuma divergência entre o SPED e o relatório foi encontrada!"
         else:
             if errors_ab != 0:
@@ -77,21 +76,21 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
             abertura_sped = format_value(first_last_tanques[id_tanque]['first']['abertura'])
             fechamento_sped = format_value(first_last_tanques[id_tanque]['last']['fechamento'])
 
-            abertura_rep = format_value(tanques['Abertura'])
-            fechamento_rep = format_value(tanques['Fechamento'])
-            if int(tanques['Tanque']) == int(id_tanque):
+            abertura_rep = format_value(tanques['abertura'])
+            fechamento_rep = format_value(tanques['fechamento'])
+            if int(tanques['tanque']) == int(id_tanque):
                 if abertura_sped != abertura_rep:
                     errors_ab += 1
                     errors += 1
-                    print(f"Tanque [{tanques['Tanque']}] apresentou {errors} divergências no valor de |abertura|:")
+                    print(f"tanque [{tanques['tanque']}] apresentou {errors} divergências no valor de |abertura|:")
                     print(f"----Valor no relatório: {abertura_rep}| ----Valor no SPED: {abertura_sped}")
                 if fechamento_sped != fechamento_rep:
                     errors_fe += 1
                     errors += 1
-                    print(f"Tanque [{tanques['Tanque']}] apresentou {errors} divergências no valor de |fechamento|:")
+                    print(f"tanque [{tanques['tanque']}] apresentou {errors} divergências no valor de |fechamento|:")
                     print(f"----Valor no relatório: {fechamento_rep}| ----Valor no SPED: {fechamento_sped}")
         if errors == 0:
-            print(f"Tanque [{tanques['Tanque']}] foi validado com sucesso! Nenhuma divergência encontrada.")
+            print(f"tanque [{tanques['tanque']}] foi validado com sucesso! Nenhuma divergência encontrada.")
             tanques['Obs_relatorio'] = "Validado com sucesso! Nenhuma divergência entre o SPED e o relatório foi encontrada!"
         else:
             if errors_ab != 0:
