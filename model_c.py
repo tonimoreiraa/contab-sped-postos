@@ -21,13 +21,11 @@ def extract_bico_data(texto):
         if match_dados:
             bomba, bico, tanque, produto, abertura, fechamento, sem_intervencao, com_intervencao, afericao = match_dados.groups()
             dados_extracao.append({
-                "Bico": bico,
-                "Produto": produto,
-                "Abertura": abertura,
-                "Fechamento": fechamento,
-                "Sem_intervencao": sem_intervencao,
-                "Com_intervencao": com_intervencao,
-                "Afericao": afericao
+                "type": "bico",
+                "bico": bico,
+                "abertura": abertura,
+                "fechamento": fechamento,
+                "afericao": afericao
             })
 
     return dados_extracao
@@ -52,11 +50,11 @@ def extract_tanque_data(texto):
         if match:
             tanque, produto, estoque_abertura, recebimentos, capacidade, estoque_fechamento, vendas, campo_adicional_1, campo_adicional_2 = match.groups()
             movimentacao_tanques.append({
-                "Tanque": tanque,
-                "Produto": produto,
-                "Abertura": estoque_abertura,
-                "Fechamento": estoque_fechamento,
-                "Recebimento": recebimentos
+                "type": "tanque",
+                "tanque": tanque,
+                "abertura": estoque_abertura,
+                "fechamento": estoque_fechamento,
+                "recebimento": recebimentos
             })
 
     return movimentacao_tanques
@@ -71,7 +69,12 @@ def get_data(cnpj, file_path):
     # Extração dos dados
     bico_data = extract_bico_data(text)
     tanque_data = extract_tanque_data(text)
+    bico_tanque_data = []
+    for bico in bico_data:
+        bico_tanque_data.append(bico)
+    for tanque in tanque_data:
+        bico_tanque_data.append(tanque)
 
     path_xlsx = f"output/{cnpj}.xlsx"
     path_dac = f"input/dac/{cnpj}.txt"
-    return bico_data, tanque_data, cnpj, path_dac, path_xlsx
+    return bico_tanque_data, cnpj, path_dac, path_xlsx
