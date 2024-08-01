@@ -1,8 +1,6 @@
 import openpyxl
 
 def get_data(cnpj, file_path):
-   
-
     wb = openpyxl.load_workbook(file_path, data_only=True)
 
     sheet = wb.active
@@ -31,14 +29,15 @@ def get_data(cnpj, file_path):
         if list:
             try:
                 bico_data.append({
-                    'Bico':list[4],
-                    'Produto':list[5],
-                    'Abertura':list[6],
-                    'Fechamento':list[7],
-                    'Sem_intervencao':None,
-                    'Com_intervencao':None,
+                    'type':'bico',
+                    'bico':list[4],
+                    #'Produto':list[5],
+                    'abertura':list[6],
+                    'fechamento':list[7],
+                    #'Sem_intervencao':None,
+                    #'Com_intervencao':None,
                     #'Lacre':list[3],
-                    'Afericao':list[9]
+                    'afericao':list[9]
                 })
             except:
                 pass
@@ -54,15 +53,22 @@ def get_data(cnpj, file_path):
         if list:
             try:
                 tanque_data.append({
-                    'Tanque':list[1],
-                    'Produto':list[2],
-                    'Abertura':list[5],
-                    'Fechamento':list[7],
-                    'Recebimento':list[6]
+                    'type':'tanque',
+                    'tanque':list[1],
+                    #'Produto':list[2],
+                    'abertura':list[5],
+                    'fechamento':list[7],
+                    'recebimento':list[6]
                 })
             except:
                 pass
 
+    bico_tanque_data = []
+    for bico in bico_data:
+        bico_tanque_data.append(bico)
+    for tanque in tanque_data:
+        bico_tanque_data.append(tanque)
+
     path_dac = f"input/dac/{cnpj}.txt"
     path_xlsx = f"output/{cnpj}.xlsx"
-    return bico_data, tanque_data, cnpj, path_dac, path_xlsx
+    return bico_tanque_data, cnpj, path_dac, path_xlsx
