@@ -32,8 +32,10 @@ for file in files:
     file_path = dir+file
     model = identify_report_model(file_path)
     if model != 'Modelo desconhecido':
-        bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path = model_dict[model](file)
-        sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path)
+        cnpj = ''.join(filter(str.isdigit, file))
+        bico_tanque_data, company, path_dac, xlsx_path = model_dict[model](cnpj, file_path)
+        print(bico_tanque_data)
+        #sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, company, path_dac, xlsx_path)
     else:
         print('Arquivo com modelo desconhecido: %s' % (file_path))
 
