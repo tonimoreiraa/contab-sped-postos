@@ -19,6 +19,10 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
     
     data_from_sped = check_sped(input_path)
     tanque_data_from_sped, bico_data_from_sped = data_from_sped
+    total_venda_tanque = 0
+    total_venda_bico = 0
+    total_inter_tanque = 0
+    total_inter_bico = 0
 
     first_last_bicos = {}
 
@@ -51,6 +55,9 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
                     errors += 1
                     print(f"bico [{bicos['bico']}] apresentou {errors} divergências no valor de |fechamento|")
                     print(f"----Valor no relatório: {fechamento_rep}| ----Valor no SPED: {fechamento_sped}")
+
+        total_venda_bico += bicos['venda']
+        total_inter_bico += bicos['afericao']
                     
         if errors == 0:
             print(f"bico [{bicos['bico']}] foi validado com sucesso! Nenhuma divergência encontrada.")
@@ -98,7 +105,11 @@ def sped_vs_rep(bico_data_from_rep, tanque_data_from_rep, empresa, input_path, x
                 tanques['Obs_relatorio'] = f"Divergência entre o SPED({abertura_sped}) e o relatório({abertura_rep})!"
             if errors_fe != 0:
                 tanques['Obs_relatorio'] = f"Divergência entre o SPED({fechamento_sped}) e o relatório({fechamento_rep})!"
-                
+        
+        total_venda_tanque += tanques['venda']
+        total_inter_tanque += tanques['recebimento']
+
+    print(f"Total Venda B: {total_venda_bico}, Total Venda T: {total_venda_tanque} | Total Inter. B: {total_inter_bico}, Total Inter. T: {total_inter_tanque}")
 
     save_to_sheet(bico_data_from_rep, tanque_data_from_rep, xlsx_path)
     print(f"*** Processamento de dados da empresa {empresa} finalizado! ***")

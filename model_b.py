@@ -21,7 +21,7 @@ def extract_data(file_path):
                         'Fechamento': match[2],
                         'Campo1': match[4],
                         'Campo2': match[5],
-
+                        'Campo3':match[3]
                     })
     return extracted_data
 
@@ -52,7 +52,8 @@ def get_data(cnpj, file_path):
                     'bico': int(bico_id),
                     'abertura': format_value(item['Abertura']),
                     'fechamento': format_value(item['Fechamento']),
-                    'afericao': format_value(item['Campo1'])
+                    'afericao': format_value(item['Campo1']),
+                    'venda':format_value(item['Campo2']) # venda_litro
                 })
             except:
                 pass
@@ -65,7 +66,8 @@ def get_data(cnpj, file_path):
                 'tanque': int(tanque_id),
                 'abertura': format_value(item['Abertura']), 
                 'fechamento': format_value(item['Campo2']),
-                'recebimento': None
+                'recebimento': 0,
+                'venda':format_value(item['Campo3']) # venda
             })
 
     path_xlsx = f"output/{cnpj}.xlsx"
