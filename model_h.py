@@ -38,7 +38,8 @@ def get_data(cnpj, file_path):
                     #'Sem_intervencao':None,
                     #'Com_intervencao':None,
                     #'Lacre':list[3],
-                    'afericao':format_value(list[9])
+                    'afericao':format_value(list[9]),
+                    'venda':format_value(list[10])
                 })
             except:
                 pass
@@ -59,7 +60,8 @@ def get_data(cnpj, file_path):
                     #'Produto':list[2],
                     'abertura':format_value(list[5]),
                     'fechamento':format_value(list[7]),
-                    'recebimento':format_value(list[6])
+                    'recebimento':format_value(list[6]),
+                    'venda':0
                 })
             except:
                 pass
