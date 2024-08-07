@@ -5,8 +5,8 @@ def format_value(value):
         value = value.replace(',', '.')
         # Converter para float e formatar com duas casas decimais
         value_float = float(value)
-        value_formated = "{:.2f}".format(value_float)
+        #value_formated = "{:.2f}".format(value_float)
         #value_formated = value_formated.replace('.', ',')
-        return float(value_formated)
+        return value_float
     except ValueError:
-        return value
+        return float(value)

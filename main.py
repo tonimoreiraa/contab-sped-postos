@@ -26,6 +26,7 @@ for cnpj in cnpjs:
 
     report_output = None
     if report_model != 'Modelo desconhecido':
+        print(report_model)
         report_data = models[report_model](cnpj, report_file_path)
         report_output = comparate(input_data, report_data)
     else:

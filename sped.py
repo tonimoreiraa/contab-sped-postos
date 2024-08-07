@@ -7,8 +7,7 @@ def read_input(input_path):
     except UnicodeDecodeError:
         # Tente uma codificação alternativa se a padrão falhar
         input_file = open(input_path, 'r', encoding='ISO-8859-1')
-        content = input_file.read()
-        
+        content = input_file.read()   
     tanque_data = {}
     bico_data = {}
     for row in content.split('\n'):
