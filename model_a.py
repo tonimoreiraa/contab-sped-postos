@@ -26,7 +26,8 @@ def extract_bico_data(texto):
                 "bico": bico,
                 "abertura": format_value(abertura),
                 "fechamento": format_value(fechamento),
-                "afericao": format_value(afericao)
+                "afericao": format_value(afericao),
+                "venda": 0
             })
 
     return dados_extracao
@@ -50,7 +51,8 @@ def extract_tanque_data(texto):
                 "tanque": tanque,
                 "abertura": format_value(estoque_abertura),
                 "fechamento": format_value(estoque_fechamento),
-                "recebimento": format_value(recebimentos)
+                "recebimento": format_value(recebimentos),
+                "venda": 0
             })
 
     return movimentacao_tanques
