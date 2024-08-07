@@ -1,6 +1,8 @@
 def is_closure_equal_to_opening(first_row, next_row):
     if not next_row:
         return True
+    if first_row['fechamento'] != next_row['abertura']:
+        return float("{:.3f}".format(abs(first_row['fechamento'] - next_row['abertura'])))
     
     return first_row['fechamento'] == next_row['abertura']
 

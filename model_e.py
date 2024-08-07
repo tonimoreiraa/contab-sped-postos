@@ -3,7 +3,7 @@ import re
 from format_value import format_value
 
 def extract_data(file_path):
-    pdf_reader = PyPDF2.PdfReader(file_path)
+    pdf_reader = PyPDF2.PdfFileReader(file_path, strict=False)
     extracted_data = []
 
     for page_num in range(len(pdf_reader.pages)):
@@ -21,6 +21,8 @@ def extract_data(file_path):
                         'Fechamento': format_value(match[2]),
                         'Campo1': format_value(match[4]),
                         'Campo2': format_value(match[5]),
+                        'Campo3': format_value(match[3])
+
 
                     })
     return extracted_data
@@ -52,7 +54,8 @@ def get_data(cnpj, file_path):
                     'bico': int(bico_id),
                     'abertura': item['Abertura'],
                     'fechamento': item['Fechamento'],
-                    'afericao': item['Campo1']
+                    'afericao': item['Campo1'], # aferição
+                    'venda': item['Campo2'] # venda_litro
                 })
             except:
                 pass
@@ -65,8 +68,10 @@ def get_data(cnpj, file_path):
                 'tanque': int(tanque_id),
                 'abertura': item['Abertura'], 
                 'fechamento': item['Campo2'],
-                'recebimento': None
+                'recebimento': None,
+                'venda': item['Campo3'] # venda
             })
+
     path_xlsx = f"output/{cnpj}.xlsx"
     path_dac = f"input/dac/{cnpj}.txt"
     return bico_tanque_data, cnpj, path_dac, path_xlsx
