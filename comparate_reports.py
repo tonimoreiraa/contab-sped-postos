@@ -81,6 +81,8 @@ def comparate(input_data, report_data):
         venda = sum(item['venda'] for item in bico_data[id])
 
         report_item = next((item for item in report_data[0] if item.get('type') == 'bico' and int(item.get('bico')) == int(id)), None)
+        
+
         if report_item != None:
             receb_rep += report_item['afericao']
             receb_sped += afericao

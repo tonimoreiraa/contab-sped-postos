@@ -35,6 +35,16 @@ def capture_tank_number(input_string):
     # Se cleaned_number estiver vazio após remover zeros à esquerda, significa que era "00000"
     return cleaned_number if cleaned_number else '0'
 
+def capture_bic_number(input_string):
+    # Divide a string em partes por espaços
+    parts = input_string.split()
+    # Captura o número do tanque (segundo elemento da lista)
+    tank_number = parts[0]
+    # Remove zeros à esquerda
+    cleaned_number = tank_number.lstrip('0')
+    # Se cleaned_number estiver vazio após remover zeros à esquerda, significa que era "00000"
+    return cleaned_number if cleaned_number else '0'
+
 def get_data(cnpj, file_path):
     extracted_data = extract_data(file_path)
     
@@ -46,7 +56,8 @@ def get_data(cnpj, file_path):
             break
         else:
             try:
-                bico_id = ''.join(filter(str.isdigit, item['Info']))
+                bico_id = capture_bic_number(item['Info'])
+                print(bico_id)
                 bico_tanque_data.append({
                     'type': 'bico',
                     'bico': int(bico_id),
