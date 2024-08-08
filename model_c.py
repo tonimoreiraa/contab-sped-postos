@@ -50,21 +50,19 @@ def extract_tanque_data(texto):
         linha = linha.strip()
         match = regex_mov_tanques.match(linha)
         if match:
-            tanque, produto, estoque_abertura, recebimentos, capacidade, estoque_fechamento, vendas, campo_adicional_1, campo_adicional_2 = match.groups()
+            tanque, produto, estoque_abertura, recebimentos, vendas, estoque_fechamento, campo, campo_adicional_1, campo_adicional_2 = match.groups()
             movimentacao_tanques.append({
                 "type": "tanque",
                 "tanque": tanque,
                 "abertura": format_value(estoque_abertura),
                 "fechamento": format_value(estoque_fechamento),
                 "recebimento": format_value(recebimentos),
-                "venda":0
+                "venda":format_value(vendas)
             })
 
     return movimentacao_tanques
 
 def get_data(cnpj, file_path):
-   
-
 
     # Extração do texto
     text = extract_text_from_pdf(file_path)
