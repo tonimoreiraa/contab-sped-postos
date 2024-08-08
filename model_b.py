@@ -57,7 +57,6 @@ def get_data(cnpj, file_path):
         else:
             try:
                 bico_id = capture_bic_number(item['Info'])
-                print(bico_id)
                 bico_tanque_data.append({
                     'type': 'bico',
                     'bico': int(bico_id),

@@ -33,13 +33,13 @@ def get_data(cnpj, file_path):
                     'type':'bico',
                     'bico':list[4],
                     #'Produto':list[5],
-                    'abertura':format_value(list[6]),
-                    'fechamento':format_value(list[7]),
+                    'abertura':list[6],
+                    'fechamento':list[7],
                     #'Sem_intervencao':None,
                     #'Com_intervencao':None,
                     #'Lacre':list[3],
-                    'afericao':format_value(list[9]),
-                    'venda':format_value(list[10])
+                    'afericao':list[9],
+                    'venda':list[10]
                 })
             except:
                 pass
@@ -58,9 +58,9 @@ def get_data(cnpj, file_path):
                     'type':'tanque',
                     'tanque':list[1],
                     #'Produto':list[2],
-                    'abertura':format_value(list[5]),
-                    'fechamento':format_value(list[7]),
-                    'recebimento':format_value(list[6]),
+                    'abertura':list[5],
+                    'fechamento':list[7],
+                    'recebimento':list[6],
                     'venda':0
                 })
             except:
