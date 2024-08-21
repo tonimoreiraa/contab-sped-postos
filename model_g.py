@@ -14,7 +14,10 @@ def get_data(cnpj, file_path):
             init = row[0].row
         elif "ESTOQUE" in str(row[0].value):
             end = row[0].row
-            break  
+            break
+        elif "]" in str(row[0].value):
+            end = row[0].row
+            break
 
     list_of_dicts = []
 
@@ -28,18 +31,23 @@ def get_data(cnpj, file_path):
     bico_data = []
     for list in list_of_dicts:
         if list:
-            bico_data.append({
-                #'Serie':list[1],
-                'type':'bico',
-                'bico':list[2],
-                #'Produto':list[3],
-                'abertura':format_value(list[5]),
-                'fechamento':format_value(list[6]),
-                #'Sem_intervencao':list[8],
-                #'Com_intervencao':list[9],
-                #'Lacre':list[10],
-                'afericao':format_value(list[11])
-            })
+            try:
+                bico_data.append({
+                    #'Serie':list[1],
+                    'type':'bico',
+                    'bico':list[2],
+                    #'Produto':list[3],
+                    'abertura':format_value(list[5]),
+                    'fechamento':format_value(list[6]),
+                    #'Sem_intervencao':list[8],
+                    #'Com_intervencao':list[9],
+                    #'Lacre':list[10],
+                    'afericao':format_value(list[11]),
+                    'venda': 0
+                })
+            except Exception as e:
+                print(f"Problema encontrado durante a leitura do arquivo {cnpj}.xlsx: {e}")
+                continue
 
     list_of_dicts = []
 
@@ -56,7 +64,8 @@ def get_data(cnpj, file_path):
                 #'Produto':list[2],
                 'abertura':format_value(list[5]),
                 'fechamento':format_value(list[8]),
-                'recebimento':format_value(list[10])
+                'recebimento':format_value(list[10]),
+                'venda':0
             })
 
     bico_tanque_data = []
