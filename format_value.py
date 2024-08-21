@@ -9,4 +9,8 @@ def format_value(value):
         #value_formated = value_formated.replace('.', ',')
         return value_float
     except ValueError:
-        return float(value)
+        try:
+            return float(value)
+        except Exception as e :
+            print(f"Problema encontrado ao executar 'format_value.py': {e}")
+            return 0

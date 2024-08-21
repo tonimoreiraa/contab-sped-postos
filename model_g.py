@@ -37,12 +37,12 @@ def get_data(cnpj, file_path):
                     'type':'bico',
                     'bico':list[2],
                     #'Produto':list[3],
-                    'abertura':format_value(list[5]),
-                    'fechamento':format_value(list[6]),
+                    'abertura':list[5],
+                    'fechamento':list[6],
                     #'Sem_intervencao':list[8],
                     #'Com_intervencao':list[9],
                     #'Lacre':list[10],
-                    'afericao':format_value(list[11]),
+                    'afericao':list[11],
                     'venda': 0
                 })
             except Exception as e:
@@ -51,7 +51,7 @@ def get_data(cnpj, file_path):
 
     list_of_dicts = []
 
-    for i in range(end + 2, sheet.max_row):  # end + 2 to skip the header
+    for i in range(end + 2, sheet.max_row+1):  # end + 2 to skip the header
         row_dict = {cell.column: cell.value for cell in sheet[i] if cell.value is not None}
         list_of_dicts.append(row_dict)
 
@@ -62,9 +62,9 @@ def get_data(cnpj, file_path):
                 'type':'tanque',
                 'tanque':list[1],
                 #'Produto':list[2],
-                'abertura':format_value(list[5]),
-                'fechamento':format_value(list[8]),
-                'recebimento':format_value(list[10]),
+                'abertura':list[5],
+                'fechamento':list[8],
+                'recebimento':list[10],
                 'venda':0
             })
 

@@ -22,7 +22,7 @@ def identify_report_model(file_path):
         if doc_info['title'] == 'Relatório AutoSystem PRO' or doc_info['producer'] == 'Microsoft: Print To PDF':
             return 'B'
         
-        if doc_info['title'] == 'Declaração de Atividades do Contribuinte' and doc_info['subject'] == 'Exportação para PDF':
+        if doc_info['subject'] == 'Exportação para PDF':
             return 'C'
         
         if 'JasperReports' in reader.metadata.get('/Creator', ''):
@@ -43,13 +43,14 @@ def identify_report_model(file_path):
         sheet = workbook.active
         cell_a1 = sheet['A1'].value
 
-        if cell_a1 == 'INFORMAÇÕES MENSAIS DE ENCERRANTES DE COMBUSTÍVEIS':
-            return 'F'
-        
-        if cell_a1 == 'RELATORIO PARA APRESENTAR - DAC':
-            return 'G'
-        
-        if 'DATA INICIAL' in cell_a1:
-            return 'H'
+        if cell_a1:
+            if cell_a1 == 'INFORMAÇÕES MENSAIS DE ENCERRANTES DE COMBUSTÍVEIS':
+                return 'F'
+            
+            if cell_a1 == 'RELATORIO PARA APRESENTAR - DAC':
+                return 'G'
+            
+            if 'DATA INICIAL' in cell_a1:
+                return 'H'
 
     return 'Modelo desconhecido'

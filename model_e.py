@@ -15,16 +15,20 @@ def extract_data(file_path):
             matches = re.findall(r'\| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?)\n', text)
             for match in matches:
                 if all(match):  # Garante que todas as informações foram extraídas
-                    extracted_data.append({
-                        'Info': match[0],
-                        'Abertura': format_value(match[1]),
-                        'Fechamento': format_value(match[2]),
-                        'Campo1': format_value(match[4]),
-                        'Campo2': format_value(match[5]),
-                        'Campo3': format_value(match[3])
+                    if not any('Aferição'.strip() in element.strip() for element in match):
+                        try:
+                            extracted_data.append({
+                                'Info': match[0],
+                                'Abertura': format_value(match[1]),
+                                'Fechamento': format_value(match[2]),
+                                'Campo1': format_value(match[4]),
+                                'Campo2': format_value(match[5]),
+                                'Campo3': format_value(match[3])
+                            })
+                        except Exception as e:
+                            print(f"Problema encontrado ao extrair dados do arquivo {file_path}: {e}")
+                            continue
 
-
-                    })
     return extracted_data
 
 def capture_tank_number(input_string):
@@ -48,10 +52,12 @@ def get_data(cnpj, file_path):
             break
         else:
             try:
-                bico_id = ''.join(filter(str.isdigit, item['Info']))
+                match = re.match(r"(\d{2})", item['Info'])
+                if match:
+                    bico_id = int(match.group(1))
                 bico_tanque_data.append({
                     'type': 'bico',
-                    'bico': int(bico_id),
+                    'bico': bico_id,
                     'abertura': item['Abertura'],
                     'fechamento': item['Fechamento'],
                     'afericao': item['Campo1'], # aferição
@@ -59,7 +65,6 @@ def get_data(cnpj, file_path):
                 })
             except:
                 pass
-                
     for item in extracted_data:
         if 'TANQUE' in item['Info']:
             tanque_id = capture_tank_number(item['Info'])
@@ -68,7 +73,7 @@ def get_data(cnpj, file_path):
                 'tanque': int(tanque_id),
                 'abertura': item['Abertura'], 
                 'fechamento': item['Campo2'],
-                'recebimento': None,
+                'recebimento': 0,
                 'venda': item['Campo3'] # venda
             })
 
