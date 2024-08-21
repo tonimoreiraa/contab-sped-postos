@@ -13,11 +13,11 @@ def extract_text_from_pdf(pdf_path):
 
 def extract_bico_data(texto):
     # Regex para extrair os dados dos bicos e tanques
-    regex_dados = re.compile(r"(\d+)\s+([\d\.,]+)\s+([\d\.,]+)\s+([\d\.,]+)\s+(\d+)\s+([\d\.,]+)\s+([\d\.,]+)")
-
+    regex_dados = re.compile(r"(\d+)\s*(-?\d{1,3}(?:\.\d{3})*(?:,\d{2})?)\s*(-?\d{1,3}(?:\.\d{3})*(?:,\d{2})?)\s*(-?\d{1,3}(?:\.\d{3})*(?:,\d{2})?)\s*(\d+)\s*(-?\d{1,3}(?:\.\d{3})*(?:,\d{2})?)\s*(-?\d{1,3}(?:\.\d{3})*(?:,\d{2})?)")
     dados_extracao = []
     for linha in texto.split('\n'):
         linha = linha.strip()
+        #print(linha)
         match_dados = regex_dados.match(linha)
         if match_dados:
             bico, abertura, fechamento, afericao, nserie, sem_intervencao,  com_intervencao = match_dados.groups()
@@ -65,10 +65,19 @@ def get_data(cnpj, file_path):
     bico_data = extract_bico_data(texto)
     tanque_data = extract_tanque_data(texto)
     bico_tanque_data = []
+    last_1 = max(idx for idx, item in enumerate(bico_data) if item['bico'] == '1')
+    # Pegar os valores a partir do último tanque '1', incluindo ele mesmo
+    bico_data = bico_data[last_1:]
     for bico in bico_data:
         bico_tanque_data.append(bico)
+        print(bico)
+
+    last_1 = max(idx for idx, item in enumerate(tanque_data) if item['tanque'] == '1')
+    # Pegar os valores a partir do último tanque '1', incluindo ele mesmo
+    tanque_data = tanque_data[last_1:]
     for tanque in tanque_data:
         bico_tanque_data.append(tanque)
+        print(tanque)
     
     path_xlsx = f"output/{cnpj}.xlsx"
     path_dac = f"input/dac/{cnpj}.txt"
