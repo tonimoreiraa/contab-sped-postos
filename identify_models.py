@@ -28,6 +28,9 @@ def identify_report_model(file_path):
         if 'JasperReports' in reader.metadata.get('/Creator', ''):
             return 'D'
         
+        if 'Nitro Pro 11' in reader.metadata.get('/Creator', ''):
+            return 'J'
+        
         reader.stream.seek(0)
         version = reader.stream.readline().decode('utf-8', errors='ignore')
         
@@ -35,8 +38,7 @@ def identify_report_model(file_path):
             return 'I'
 
         if not doc_info['author'] and not doc_info['subject']:
-            # analisar essa situação e o pq estava E
-            return 'J'
+            return 'E'
         
     
     elif file_extension == '.xlsx':
