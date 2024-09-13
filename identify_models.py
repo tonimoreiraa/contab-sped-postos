@@ -35,7 +35,7 @@ def identify_report_model(file_path):
             return 'I'
 
         if not doc_info['author'] and not doc_info['subject']:
-            return 'E'
+            return 'J'
         
     
     elif file_extension == '.xlsx':

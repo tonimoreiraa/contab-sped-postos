@@ -34,7 +34,7 @@ def extract_bico_data(texto):
 
 def extract_tanque_data(texto):
     # Regex para extrair os dados da seção "movimentação por tanques"
-    regex_mov_tanques = re.compile(r"(\d{3})\s+(\d{1,3}(?:\.\d{3})*,\d{3})\s+([\w\s]+)\s+(\d{1,3}(?:\.\d{3})*,\d{3})\s+(\d{1,3}(?:\.\d{3})*,\d{3})\s+(-?\d{1,3}(?:\.\d{3})*,\d{3})")
+    regex_mov_tanques = re.compile(r"(\d{3})\s+(\d{1,3}(?:\.\d{3})*,\d{3})\s+([\w\s]+)\s+(\d{1,3}(?:\.\d{3})*,\d{3})\s*(\d{1,3}(?:\.\d{3})*,\d{3})?\s*(-?\d{1,3}(?:\.\d{3})*,\d{3})")
     movimentacao_tanques = []
     for linha in texto.split('\n'):
         linha = linha.strip()
@@ -55,9 +55,6 @@ def extract_tanque_data(texto):
 
 
 def get_data(cnpj, file_path):
-   
-
-
     # Extração do texto
     texto = extract_text_from_pdf(file_path)
 

@@ -1,6 +1,6 @@
 def read_input(input_path):
     try:
-        input_file = open(input_path, 'r', encoding='utf-8')
+        input_file = open(input_path, 'r', encoding='utf-8', errors='ignore')
         content = input_file.read()
         tanque_data = {}
         bico_data = {}
@@ -24,5 +24,6 @@ def read_input(input_path):
                     bico_data[bico_id].append(dict)
 
         return [tanque_data, bico_data]
-    except:
+    except Exception as e:
+        print(e)
         return False

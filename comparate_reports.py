@@ -4,6 +4,7 @@ def comparate(input_data, report_data):
     # Tanque
     receb_rep, venda_rep, receb_sped, venda_sped = [0,0,0,0]
     tanque_data = input_data[0]
+
     for id in tanque_data.keys():
         rows_length = len(tanque_data[id])
         abertura = tanque_data[id][0]['abertura']

@@ -73,6 +73,7 @@ def get_data(cnpj, file_path):
     bico_tanque_data = []
     for bico in bico_data:
         bico_tanque_data.append(bico)
+        
     for tanque in tanque_data:
         bico_tanque_data.append(tanque)
 

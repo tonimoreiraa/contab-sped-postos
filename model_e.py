@@ -3,13 +3,12 @@ import re
 from format_value import format_value
 
 def extract_data(file_path):
-    pdf_reader = PyPDF2.PdfFileReader(file_path, strict=False)
+    pdf_reader = PyPDF2.PdfReader(file_path, strict=False)
     extracted_data = []
 
     for page_num in range(len(pdf_reader.pages)):
         page = pdf_reader.pages[page_num]
         text = page.extract_text()
-        
         # Extrai dados da tabela "POSIÇÃO DOS TANQUES"
         if "POSIÇÃO DOS TANQUES" in text:
             matches = re.findall(r'\| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?)\n', text)

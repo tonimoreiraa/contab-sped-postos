@@ -7,6 +7,7 @@ import model_f
 import model_g
 import model_h
 import model_i
+import model_j
 
 models = {
     'A': model_a.get_data,
@@ -17,5 +18,6 @@ models = {
     'F': model_f.get_data,
     'G': model_g.get_data,
     'H': model_h.get_data,
-    'I': model_i.get_data
+    'I': model_i.get_data,
+    'J': model_j.get_data
 }

@@ -70,14 +70,12 @@ def get_data(cnpj, file_path):
     bico_data = bico_data[last_1:]
     for bico in bico_data:
         bico_tanque_data.append(bico)
-        print(bico)
 
     last_1 = max(idx for idx, item in enumerate(tanque_data) if item['tanque'] == '1')
     # Pegar os valores a partir do último tanque '1', incluindo ele mesmo
     tanque_data = tanque_data[last_1:]
     for tanque in tanque_data:
         bico_tanque_data.append(tanque)
-        print(tanque)
     
     path_xlsx = f"output/{cnpj}.xlsx"
     path_dac = f"input/dac/{cnpj}.txt"

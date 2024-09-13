@@ -2,8 +2,6 @@ import openpyxl
 from format_value import format_value
 
 def get_data(cnpj, file_path):
-   
-
     wb = openpyxl.load_workbook(file_path, data_only=True)
 
     sheet = wb.active
