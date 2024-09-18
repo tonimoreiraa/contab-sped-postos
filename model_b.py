@@ -21,8 +21,7 @@ def extract_data(file_path):
                         'Fechamento': match[2],
                         'Campo1': match[4],
                         'Campo2': match[5],
-                        'Campo3': match[3],
-                        'Campo4': match[6]
+                        'Campo3':match[3]
                     })
     return extracted_data
 
@@ -64,7 +63,7 @@ def get_data(cnpj, file_path):
                     'abertura': format_value(item['Abertura']),
                     'fechamento': format_value(item['Fechamento']),
                     'afericao': format_value(item['Campo1']),
-                    'venda':format_value(item['Campo3']) # venda_litro
+                    'venda':format_value(item['Campo2']) # venda_litro
                 })
             except:
                 pass
@@ -76,8 +75,8 @@ def get_data(cnpj, file_path):
                 'type': 'tanque',
                 'tanque': int(tanque_id),
                 'abertura': format_value(item['Abertura']), 
-                'fechamento': format_value(item['Campo4']),
-                'recebimento': format_value(item['Fechamento']),
+                'fechamento': format_value(item['Campo2']),
+                'recebimento': 0,
                 'venda':format_value(item['Campo3']) # venda
             })
 
