@@ -1,9 +1,9 @@
-import PyPDF2
+import pypdf
 import re
 from format_value import format_value
 
 def extract_data(file_path):
-    pdf_reader = PyPDF2.PdfReader(file_path, strict=False)
+    pdf_reader = pypdf.PdfReader(file_path, strict=False)
     extracted_data = []
 
     for page_num in range(len(pdf_reader.pages)):

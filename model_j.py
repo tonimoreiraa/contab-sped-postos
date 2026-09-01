@@ -1,11 +1,11 @@
-import PyPDF2
+import pypdf
 import re
 from format_value import format_value
 
 def extract_text_from_pdf(pdf_path):
     text = ""
     with open(pdf_path, "rb") as file:
-        reader = PyPDF2.PdfReader(file)
+        reader = pypdf.PdfReader(file)
         for page in reader.pages:
             text += page.extract_text()
     return text

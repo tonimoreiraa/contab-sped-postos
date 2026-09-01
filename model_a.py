@@ -1,10 +1,10 @@
-import PyPDF2
+import pypdf
 import re
 from format_value import format_value
 
 def extract_text_from_pdf(pdf_path):
     with open(pdf_path, "rb") as file:
-        pdf_reader = PyPDF2.PdfReader(file)
+        pdf_reader = pypdf.PdfReader(file)
         texto = ""
         for page_num in range(len(pdf_reader.pages)):
             page = pdf_reader.pages[page_num]
